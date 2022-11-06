@@ -1,8 +1,8 @@
 package com.bpcalc;
 
-// import javax.validation.constraints.Max;
-// import javax.validation.constraints.Min;
-// import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class BpPressure {
 
@@ -13,19 +13,19 @@ public class BpPressure {
 		this.diastolic = diastolic;
 	}
 
-	// public final Integer SystolicMin = 70;
-	// public final Integer SystolicMax = 190;
-	// public final Integer DiastolicMin = 40;
-	// public final Integer DiastolicMax = 100;
+	public final short SystolicMin = 70;
+	public final short SystolicMax = 190;
+	public final short DiastolicMin = 40;
+	public final short DiastolicMax = 100;
 
-	// @NotNull
-	// @Min(SystolicMin)
-	// @Max(SystolicMax)
+	@NotNull
+	@Min(SystolicMin)
+	@Max(SystolicMax)
 	private Integer systolic;
 
-	// @NotNull
-	// @Min(DiastolicMin)
-	// @Max(DiastolicMax)
+	@NotNull
+	@Min(DiastolicMin)
+	@Max(DiastolicMax)
 	private Integer diastolic;
 
 	private String category = null;

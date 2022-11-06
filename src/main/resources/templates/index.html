@@ -14,12 +14,15 @@
             <hr />
             <form action="#" th:action="@{/}" th:object="${bpPressure}" method="post">
                 <div class="input-group mb-3">
-                    <input type="number" min="70" max="190" th:field="*{systolic}" class="form-control" placeholder="Systolic Pressure">
+                    <input type="number" th:field="*{systolic}" class="form-control" placeholder="Systolic Pressure">
                     <span class="input-group-text">mmHg</span>
+                    <p class="input-group alert alert-warning" style="padding: 0 0 0 10px" th:if="${#fields.hasErrors('systolic')}" th:errors="*{systolic}"/>
                 </div>
+                
                 <div class="input-group mb-3">
-                    <input type="number" min="40" max= "100" th:field="*{diastolic}" class="form-control" placeholder="Diastolic Pressure">
+                    <input type="number" th:field="*{diastolic}" class="form-control" placeholder="Diastolic Pressure">
                     <span class="input-group-text">mmHg</span>
+                    <p class="input-group alert alert-warning" style="padding: 0 0 0 10px" th:if="${#fields.hasErrors('diastolic')}" th:errors="*{diastolic}"/>
                 </div>
                 
                 <div class="input-group mb-5">

@@ -1,21 +1,27 @@
 package com.bpcalc;
 
 import org.springframework.ui.Model;
+import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
 
 @Controller
 public class BpPressureController {
     @GetMapping("/")
 	public String showIndex(Model model) {
-		model.addAttribute("bpPressure", new BpPressure());
+		model.addAttribute("bpPressure", new BpPressure(100,70));
 		return "index";
 	}
 
 	@PostMapping("/")
-	public String updateIndex(@ModelAttribute BpPressure bpPressure, Model model) {
+	public String updateIndex(@Valid @ModelAttribute BpPressure bpPressure, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+            return "index";
+        }
+
 		String category = calcCategory(bpPressure).getDisplayValue();
 		bpPressure.setCategory(category);
 		
