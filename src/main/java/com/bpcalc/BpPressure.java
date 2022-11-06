@@ -28,7 +28,7 @@ public class BpPressure {
 	// @Max(DiastolicMax)
 	private Integer diastolic;
 
-	private String category;
+	private String category = null;
 
 	public Integer getSystolic() {
 		return this.systolic;
