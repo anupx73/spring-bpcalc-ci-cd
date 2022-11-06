@@ -29,8 +29,8 @@
                     <button type="submit" class="btn btn-primary">Calculate</button>
                 </div>
 
-                <div th:if="${bpPressure.category != null}" class="input-group mb-5">
-                    <p class="alert alert-primary" th:text="${bpPressure.category}" role="alert"/>
+                <div class="input-group mb-5" th:if="${bpPressure.category != null}">
+                    <p class="input-group alert alert-primary" th:text="${bpPressure.category}"/>
                 </div>
             </form>
         </div>

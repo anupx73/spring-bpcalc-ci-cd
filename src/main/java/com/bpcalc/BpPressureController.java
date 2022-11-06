@@ -35,7 +35,7 @@ public class BpPressureController {
 
 	public enum BPCategory
     {
-		Invalid("Invalid Pressure"),
+		Invalid("Invalid Pressure! Systolic should be higher than Diastolic"),
         Low("Low Blood Pressure"),
         Ideal("Ideal Blood Pressure"),
         PreHigh("Pre-High Blood Pressure"),
@@ -55,6 +55,10 @@ public class BpPressureController {
 	public BPCategory calcCategory(BpPressure bpPressure)
 	{
 		BPCategory resultCategory = BPCategory.Invalid;
+		
+		if (bpPressure.getSystolic() < bpPressure.getDiastolic()) {
+			return resultCategory;
+		}
 
 		if (bpPressure.getSystolic() < 90 && bpPressure.getDiastolic() < 60)
 			resultCategory = BPCategory.Low;
