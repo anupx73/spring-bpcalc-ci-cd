@@ -1,17 +1,10 @@
 package com.bpcalc;
 
 import org.springframework.ui.Model;
-
-import java.io.Console;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class BpPressureController {
@@ -34,21 +27,9 @@ public class BpPressureController {
 		return "index";
 	}
 
-	// @PostMapping("/")
-    // public ModelAndView updateIndex(@RequestParam String systolic, @RequestParam String diastolic) {
-
-	// 	BpPressure bpPressure = new BpPressure(Integer.parseInt(systolic), Integer.parseInt(diastolic));
-	// 	String category = calcCategory(bpPressure).getDisplayValue();
-	// 	System.out.println(category);
-
-    //     Map<String, Object> params = new HashMap<>();
-    //     params.put("category", category);
-
-    //     return new ModelAndView("index", params);
-    // }
-
 	public enum BPCategory
     {
+		Invalid("Invalid Pressure"),
         Low("Low Blood Pressure"),
         Ideal("Ideal Blood Pressure"),
         PreHigh("Pre-High Blood Pressure"),
@@ -67,7 +48,7 @@ public class BpPressureController {
 
 	public BPCategory calcCategory(BpPressure bpPressure)
 	{
-		BPCategory resultCategory;// = BPCategory.Low;
+		BPCategory resultCategory = BPCategory.Invalid;
 
 		if (bpPressure.getSystolic() < 90 && bpPressure.getDiastolic() < 60)
 			resultCategory = BPCategory.Low;
