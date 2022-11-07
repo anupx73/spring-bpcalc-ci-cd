@@ -4,6 +4,9 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class BpPressure {
 
 	public BpPressure(){}
@@ -21,36 +24,18 @@ public class BpPressure {
 	@NotNull
 	@Min(SystolicMin)
 	@Max(SystolicMax)
+	@Getter
+	@Setter
 	private Integer systolic;
 
 	@NotNull
 	@Min(DiastolicMin)
 	@Max(DiastolicMax)
+	@Getter
+	@Setter
 	private Integer diastolic;
 
+	@Getter
+	@Setter
 	private String category = null;
-
-	public Integer getSystolic() {
-		return this.systolic;
-	}
-
-	public void setSystolic(Integer systolic) {
-		this.systolic = systolic;
-	}
-
-	public Integer getDiastolic() {
-		return this.diastolic;
-	}
-
-	public void setDiastolic(Integer diastolic) {
-		this.diastolic = diastolic;
-	}
-
-	public String getCategory() {
-		return this.category;
-	}
-
-	public void setCategory(String category) {
-		this.category = category;
-	}
 }
