@@ -17,7 +17,7 @@ import org.springframework.validation.BindingResult;
 @Controller
 public class BpPressureController {
 	
-	private List<HistoricalPressure> historyList = new LinkedList<HistoricalPressure>();
+	public List<HistoricalPressure> historyList = new LinkedList<HistoricalPressure>();
 
     @GetMapping("/")
 	public String showIndex(Model model) {
@@ -59,7 +59,7 @@ public class BpPressureController {
 		return "history";
 	}
 	
-	public enum BPCategory
+	public static enum BPCategory
     {
 		Invalid("Invalid Pressure! Systolic should be higher than Diastolic"),
         Low("Low Blood Pressure"),
@@ -100,7 +100,7 @@ public class BpPressureController {
 		return resultCategory;
 	}
 
-	private String calcAveragePressure() {
+	public String calcAveragePressure() {
 		String avgPressureValue = "";
 
 		if (!historyList.isEmpty()) {
