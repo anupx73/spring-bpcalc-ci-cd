@@ -9,13 +9,43 @@ import java.util.Date;
 public class BpPressureControllerTest {
 
     @Test
-    public void testCalcCategory() {
+    public void testCalcCategory_1() {
+        var testPressure = new BpPressure(80, 50);
+
+        var testController = new BpPressureController();
+        var testCat = testController.calcCategory(testPressure);
+        
+        Assertions.assertEquals(BpPressureController.BPCategory.Low, testCat);
+    }
+
+    @Test
+    public void testCalcCategory_2() {
         var testPressure = new BpPressure(100, 60);
 
         var testController = new BpPressureController();
         var testCat = testController.calcCategory(testPressure);
         
         Assertions.assertEquals(BpPressureController.BPCategory.Ideal, testCat);
+    }
+
+    @Test
+    public void testCalcCategory_3() {
+        var testPressure = new BpPressure(180, 100);
+
+        var testController = new BpPressureController();
+        var testCat = testController.calcCategory(testPressure);
+        
+        Assertions.assertEquals(BpPressureController.BPCategory.High, testCat);
+    }
+
+    @Test
+    public void testCalcCategory_4() {
+        var testPressure = new BpPressure(80, 100);
+
+        var testController = new BpPressureController();
+        var testCat = testController.calcCategory(testPressure);
+        
+        Assertions.assertEquals(BpPressureController.BPCategory.Invalid, testCat);
     }
 
     @Test
@@ -46,31 +76,4 @@ public class BpPressureControllerTest {
 
         Assertions.assertEquals("110/75, Ideal Blood Pressure", avgPressure);
     }
-
-    @Test
-    public void testShowIndex() {
-        var testController = new BpPressureController();
-        var page = testController.showIndex(null);
-
-        Assertions.assertEquals("index", page);
-    }
-
-    // @Test
-    // public void testUpdateIndex() {
-    //     var testController = new BpPressureController();
-    //     var testPressure = new BpPressure(100, 60);
-        
-    //     var page = testController.updateIndex(testPressure, null, null);
-
-    //     assertEquals("index", page);
-    // }
-
-    // @Test
-    // public void testShowHistory() {
-    //     var testModel = new Model;
-    //     var testController = new BpPressureController();
-    //     var page = testController.showHistory(testModel);
-
-    //     assertEquals("history", page);
-    // }
 }
