@@ -10,11 +10,12 @@
 	</parent>
 	<groupId>com.bpcalc</groupId>
 	<artifactId>bpcalculator</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.2</version>
 	<name>BP Category Calculator</name>
 	<description>Spring Boot BP Calculator</description>
 	<properties>
 		<java.version>17</java.version>
+		<jbehave.version>5.0</jbehave.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -73,6 +74,12 @@
 			<version>5.8.2</version>
 			<scope>test</scope>
 		</dependency>	
+		<dependency>
+			<groupId>org.jbehave</groupId>
+			<artifactId>jbehave-core</artifactId>
+			<version>${jbehave.version}</version>
+			<scope>test</scope>
+		</dependency>		
 	</dependencies>
 
 	<build>
@@ -109,7 +116,35 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>			
+			</plugin>
+			  <plugin>
+				<groupId>org.jbehave</groupId>
+				<artifactId>jbehave-maven-plugin</artifactId>
+				<version>${jbehave.version}</version>
+				<executions>
+					<execution>
+						<id>run-stories-as-embeddables</id>
+						<phase>integration-test</phase>
+						<configuration>
+							<scope>test</scope>
+							<includes>
+								<include>**/*Stories.java</include>
+							</includes>
+							<systemProperties>
+								<property>
+								  <name>java.awt.headless</name>
+								  <value>true</value>
+								</property>
+							</systemProperties>
+							<ignoreFailureInStories>true</ignoreFailureInStories>
+							<ignoreFailureInView>false</ignoreFailureInView>
+						</configuration>
+						<goals>
+							<goal>run-stories-as-embeddables</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 

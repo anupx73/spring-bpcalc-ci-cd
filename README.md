@@ -15,3 +15,5 @@ Compile `mvn clean compile`
 Unit test `mvn surefire:test`
 
 Integration test `mvn failsafe:integration-test`
+
+BDD test `mvn jbehave:run-stories-as-embeddables@run-stories-as-embeddables`
