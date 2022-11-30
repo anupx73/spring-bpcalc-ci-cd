@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>BP Calculator</title>
+        <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/webjars/jquery/jquery.min.js"></script>
+        <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/webjars/font-awesome/css/all.css" />
+    </head>    
+    <body>
+        <div class="container"><br/>
+            <div class="d-flex">
+                <div class="me-auto p-2">
+                    <h4 style="color: #15a9c7"><span class="fa-solid fa-history"></span>&nbsp;&nbsp;BP Historical Data</h4>
+                </div>
+                <div class="p-2">
+                    <form action="#" th:action="@{/}" method="get">
+                        <button type="submit" class="btn btn-outline-info">
+                            <h6 style="padding: 0; margin: 0;"><span class="fa-solid fa-backspace"></span>&nbsp;Back</h6>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <hr />
+            <div class="mb-5" th:if="${not#lists.isEmpty(historyList)}">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Time</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Systolic</th>
+                        <th scope="col">Diastolic</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="pressure : ${historyList}">
+                        <td th:text="${pressure.timestamp}"></td>
+                        <td th:text="${pressure.category}"></td>
+                        <td th:text="${pressure.systolic}"></td>
+                        <td th:text="${pressure.diastolic}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="input-group mb-5" th:if="${not#lists.isEmpty(historyList)}">
+                <h5 style="color: #15a9c7; margin-bottom: 10px;"><span class="fa-solid fa-droplet"></span>&nbsp;&nbsp;Average Blood Pressure</h5>
+                <hr />
+                <p class="input-group alert alert-info" th:text="${avgPressure}"/>
+            </div>
+        </div>
+    </body>
+</html>
