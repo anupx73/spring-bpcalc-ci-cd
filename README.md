@@ -1,19 +1,24 @@
-# BP Category Calculator
-A spring boot MVC application. The main objective of this repo is to work on CI/CD with Github Actions with end to end testing.
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hypheni_spring-bpcalc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hypheni_spring-bpcalc)
 
-## Features
-- Calculate the category for given Systolic and Diastolic pressure
-- Show the historical pressure readings
-- Calculate an average pressure
+# BP Calculator - CI/CD Demo
+A Java SpringBoot MVC application to build a CI/CD pipeline using Github Actions. This includes:
+
+- Web app with an index and history page using thymeleaf template engine
+- Continuous Integration
+    - Unit test using JUnit and code coverage calculated by Jococo
+    - Integration test using SpringBoot Testing framework
+    - BDD test using JBehave framework
+    - Code quality check by SonarCloud
 
 ## Build commands
+- Compile `mvn clean compile`
+- Unit test `mvn surefire:test`
+- Integration test `mvn verify failsafe:integration-test`
+- Generate code coverage report `mvn jacoco:report`
+- BDD test `mvn jbehave:run-stories-as-embeddables@run-stories-as-embeddables`
+- Sonar analysis `mvn sonar:sonar -Dsonar.login=9c23f3c6db6fe5449862d220705a5ed03634d6c7 -Dsonar.host.url=https://sonarcloud.io -Dsonar.qualitygate.wait=true -Dsonar.organization=hypheni -Dsonar.projectKey=hypheni_spring-bpcalc`
 
----
-
-Compile `mvn clean compile`
-
-Unit test `mvn surefire:test`
-
-Integration test `mvn failsafe:integration-test`
-
-BDD test `mvn jbehave:run-stories-as-embeddables@run-stories-as-embeddables`
+## Sonar integration
+- org key `hypheni`
+- proj key `hypheni_spring-bpcalc`
+- token `9c23f3c6db6fe5449862d220705a5ed03634d6c7`
