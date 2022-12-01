@@ -7,7 +7,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
