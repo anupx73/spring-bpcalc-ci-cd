@@ -17,6 +17,7 @@ A Java SpringBoot MVC application to build a CI/CD pipeline using Github Actions
 - Generate code coverage report `mvn jacoco:report`
 - BDD test `mvn jbehave:run-stories-as-embeddables@run-stories-as-embeddables`
 - Sonar analysis `mvn sonar:sonar -Dsonar.login=9c23f3c6db6fe5449862d220705a5ed03634d6c7 -Dsonar.host.url=https://sonarcloud.io -Dsonar.qualitygate.wait=true -Dsonar.organization=hypheni -Dsonar.projectKey=hypheni_spring-bpcalc`
+- Dependency scan: `mvn dependency-check:check -DfailBuildOnCVSS=4`
 
 ## Sonar integration
 - org key `hypheni`
