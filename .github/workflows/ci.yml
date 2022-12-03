@@ -16,6 +16,7 @@ on:
 
 env:
   MAVEN_PARAM: --batch-mode
+  CVSS_TOLERANCE: 4
 
 jobs:
   build:
@@ -61,7 +62,7 @@ jobs:
                                     -Dsonar.projectKey="${{ secrets.SONAR_PROJ }}"
                         
     - name: Dependency scan
-      run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=4
+      run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=$CVSS_TOLERANCE
     
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
