@@ -40,6 +40,13 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
 
+    - name: Set up SonarCloud cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
     - name: Git code checkout
       uses: actions/checkout@v3
 
@@ -55,14 +62,23 @@ jobs:
     - name: Integration test
       run: mvn $MAVEN_PARAM verify failsafe:integration-test
       
+    # - name: Code analysis
+    #   run: mvn $MAVEN_PARAM verify sonar:sonar \
+    #         -Dsonar.host.url=https://sonarcloud.io \
+    #         -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
+    #         -Dsonar.organization=hypheni \
+    #         -Dsonar.projectKey=hypheni_spring-bpcalc-ci-cd \
+    #         -Dsonar.qualitygate.wait=true
+
     - name: Code analysis
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
-      run: mvn $MAVEN_PARAM verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-            -Dsonar.projectKey=hypheni_spring-bpcalc \
+      run: mvn $MAVEN_PARAM org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.organization=hypheni \
+            -Dsonar.projectKey=hypheni_spring-bpcalc-ci-cd \
             -Dsonar.qualitygate.wait=true
-      
+
     - name: Dependency scan
       run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=$CVSS_TOLERANCE
 
