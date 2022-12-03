@@ -144,6 +144,12 @@
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
 				<version>7.3.2</version>
+				<configuration>
+					<suppressionFiles>
+					  <suppressionFile>owasp-dependency-check-suppressions.xml</suppressionFile>
+					</suppressionFiles>
+					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>none</phase>
