@@ -19,6 +19,9 @@ on:
 env:
   MAVEN_PARAM: --batch-mode
   CVSS_TOLERANCE: 4
+  SONAR_URL: https://sonarcloud.io
+  SONAR_ORG: hypheni
+  SONAR_PROJ: hypheni_spring-bpcalc-ci-cd
 
 jobs:
   build:
@@ -60,25 +63,15 @@ jobs:
       run: mvn $MAVEN_PARAM jbehave:run-stories-as-embeddables@run-stories-as-embeddables
 
     - name: Integration test
-      run: mvn $MAVEN_PARAM verify failsafe:integration-test
-      
-    # - name: Code analysis
-    #   run: mvn $MAVEN_PARAM verify sonar:sonar \
-    #         -Dsonar.host.url=https://sonarcloud.io \
-    #         -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
-    #         -Dsonar.organization=hypheni \
-    #         -Dsonar.projectKey=hypheni_spring-bpcalc-ci-cd \
-    #         -Dsonar.qualitygate.wait=true
+      run: mvn $MAVEN_PARAM verify failsafe:integration-test jacoco:report
 
     - name: Code analysis
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-            mvn $MAVEN_PARAM org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-                -Dsonar.host.url=https://sonarcloud.io \
-                -Dsonar.organization=hypheni \
-                -Dsonar.projectKey=hypheni_spring-bpcalc-ci-cd \
-                -Dsonar.qualitygate.wait=true
+      run: mvn $MAVEN_PARAM verify sonar:sonar \
+            -Dsonar.host.url=$SONAR_URL \
+            -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
+            -Dsonar.organization=$SONAR_ORG \
+            -Dsonar.projectKey=$SONAR_PROJ \
+            -Dsonar.qualitygate.wait=true
 
     - name: Dependency scan
       run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=$CVSS_TOLERANCE
