@@ -66,7 +66,8 @@ jobs:
       run: mvn $MAVEN_PARAM verify failsafe:integration-test jacoco:report
 
     - name: Code analysis
-      run: mvn $MAVEN_PARAM verify sonar:sonar \
+      run: |
+        mvn $MAVEN_PARAM verify sonar:sonar \
             -Dsonar.host.url=$SONAR_URL \
             -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
             -Dsonar.organization=$SONAR_ORG \
