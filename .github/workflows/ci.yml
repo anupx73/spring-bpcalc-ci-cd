@@ -17,9 +17,6 @@ on:
 env:
   MAVEN_PARAM: --batch-mode
 
-env:
-  MAVEN_PARAM: --batch-mode
-
 jobs:
   build:
 
