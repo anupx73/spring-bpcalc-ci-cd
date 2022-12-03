@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Continuous Integration
 
 on:
   workflow_dispatch: 
@@ -27,6 +27,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
         
+    - name: Env verify
+      run: java -version; mvn -version; ls /home/runner/work/spring-bpcalc-ci-cd/spring-bpcalc-ci-cd
+
     - name: Code compile
       run: mvn clean compile
       
