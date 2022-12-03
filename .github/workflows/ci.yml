@@ -11,50 +11,54 @@ name: Continuous Integration
 on:
   workflow_dispatch: 
 
+env:
+  MAVEN_PARAM: --batch-mode
+
 jobs:
   build:
 
     runs-on: ubuntu-22.04
 
     steps:
-    - name: Git code checkout
-      uses: actions/checkout@v3
-    
+   
     - name: Set up Java 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-        cache: maven
-        
-    - name: Env verify
-      run: java -version; mvn -version; ls /home/runner/work/spring-bpcalc-ci-cd/spring-bpcalc-ci-cd
+
+    - name: Set up maven cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+
+    - name: Git code checkout
+      uses: actions/checkout@v3
 
     - name: Code compile
-      run: mvn clean compile
+      run: mvn $MAVEN_PARAM clean compile
       
     - name: Unit test
-      run: mvn surefire:test
+      run: mvn $MAVEN_PARAM test
           
     - name: Acceptance test
-      run: mvn jbehave:run-stories-as-embeddables@run-stories-as-embeddables
+      run: mvn $MAVEN_PARAM jbehave:run-stories-as-embeddables@run-stories-as-embeddables
 
     - name: Integration test
-      run: mvn verify failsafe:integration-test
-      
-    - name: Generate code coverage
-      run: mvn jacoco:report
+      run: mvn $MAVEN_PARAM verify failsafe:integration-test
       
     - name: Code analysis
       run: |
-        mvn sonar:sonar -Dsonar.host.url=https://sonarcloud.io \
-                        -Dsonar.qualitygate.wait=true \
-                        -Dsonar.login="${{ secrets.SONAR_LOGIN_KEY }}" \
-                        -Dsonar.organization="${{ secrets.SONAR_ORG }}" \
-                        -Dsonar.projectKey="${{ secrets.SONAR_PROJ }}"
+        mvn $MAVEN_PARAM sonar:sonar -Dsonar.host.url=https://sonarcloud.io \
+                                    -Dsonar.qualitygate.wait=true \
+                                    -Dsonar.login="${{ secrets.SONAR_LOGIN_KEY }}" \
+                                    -Dsonar.organization="${{ secrets.SONAR_ORG }}" \
+                                    -Dsonar.projectKey="${{ secrets.SONAR_PROJ }}"
                         
     - name: Dependency scan
-      run: mvn dependency-check:check -DfailBuildOnCVSS=4
+      run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=4
     
     # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
     #- name: Update dependency graph
