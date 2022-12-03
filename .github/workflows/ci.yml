@@ -9,9 +9,11 @@
 name: Continuous Integration
 
 on:
-#  workflow_dispatch: 
+  workflow_dispatch: 
+    branches:
+      - main
   push:
-     branches:
+    branches:
       - feat/ci-cd
 
 env:
