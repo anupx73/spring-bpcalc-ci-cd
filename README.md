@@ -19,3 +19,5 @@ A Java SpringBoot MVC application to build a CI/CD pipeline using Github Actions
 - Sonar analysis `mvn sonar:sonar -Dsonar.login=<key> -Dsonar.host.url=https://sonarcloud.io -Dsonar.qualitygate.wait=true -Dsonar.organization=<key> -Dsonar.projectKey=<key>`
 - Dependency scan: `mvn dependency-check:check -DfailBuildOnCVSS=4`
 
+# GCP
+svc account `gcp-github-access@hypheni-gcp-370616.iam.gserviceaccount.com`
