@@ -57,19 +57,18 @@ jobs:
     #   run: mvn $MAVEN_PARAM clean package
 
     # {{Google cloud login
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
+    - name: 'Authenticate to Google Cloud'
+      id: 'auth'
       uses: 'google-github-actions/auth@v1'
       with:
         credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-    - name: 'Set up Cloud SDK'
-      uses: 'google-github-actions/setup-gcloud@v1'
+    - uses: 'google-github-actions/setup-gcloud@v1'
 
     # Now you can run gcloud commands authenticated as the impersonated service account.
     - id: 'gcloud'
       name: 'gcloud'
       run: |-
-        gcloud secrets versions access "latest" --secret "my-secret"
+        gcloud gcloud projects list
     # }}Google cloud login
 
 
