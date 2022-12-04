@@ -17,8 +17,6 @@ on:
       - feat/ci-cd
 
 env:
-  MAVEN_PARAM: --batch-mode
-
   PROJECT_ID: hypheni-gcp-370616
   SERVICE: spring-bpcalc
   REGION: europe-west4
@@ -67,6 +65,14 @@ jobs:
       run: |-
         docker build -t "gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" ./
         docker push "gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+
+    - name: Deploy to Cloud Run
+      id: deploy
+      uses: google-github-actions/deploy-cloudrun@v1
+      with:
+        service: ${{ env.SERVICE }}
+        region: ${{ env.REGION }}
+        image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
 
     - name: Show output
       run: 'echo "${{ steps.deploy.outputs.url }}"'
