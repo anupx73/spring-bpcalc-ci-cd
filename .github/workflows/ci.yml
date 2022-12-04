@@ -68,7 +68,7 @@ jobs:
     - id: 'gcloud'
       name: 'gcloud'
       run: |-
-        gcloud gcloud projects list
+        gcloud projects list
     # }}Google cloud login
 
 
