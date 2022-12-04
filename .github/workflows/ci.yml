@@ -23,6 +23,11 @@ env:
   SONAR_ORG: hypheni
   SONAR_PROJ: hypheni_spring-bpcalc-ci-cd
 
+  PROJECT_ID: hypheni-gcp-370616
+  GAR_LOCATION: gcr.io
+  SERVICE: spring-bpcalc
+  REGION: europe-west4
+
 jobs:
   build:
 
@@ -30,70 +35,52 @@ jobs:
 
     steps:
    
-    # - name: Set up Java 17
-    #   uses: actions/setup-java@v3
-    #   with:
-    #     java-version: '17'
-    #     distribution: 'temurin'
+    - name: Set up Java 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
 
-    # - name: Set up maven cache
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: ~/.m2
-    #     key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-    #     restore-keys: ${{ runner.os }}-m2
+    - name: Set up maven cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
 
-    # - name: Set up SonarCloud cache
-    #   uses: actions/cache@v2
-    #   with:
-    #     path: ~/.sonar/cache
-    #     key: ${{ runner.os }}-sonar
-    #     restore-keys: ${{ runner.os }}-sonar
+    - name: Set up SonarCloud cache
+      uses: actions/cache@v2
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
 
     - name: Git code checkout
       uses: actions/checkout@v3
 
-    # - name: Code compile
-    #   run: mvn $MAVEN_PARAM clean package
+    - name: Code compile
+      run: mvn $MAVEN_PARAM clean package
 
-    # {{Google cloud login
-    - name: 'Authenticate to Google Cloud'
-      id: 'auth'
-      uses: 'google-github-actions/auth@v1'
-      with:
-        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
-    - uses: 'google-github-actions/setup-gcloud@v1'
-
-    # Now you can run gcloud commands authenticated as the impersonated service account.
-    - id: 'gcloud'
-      name: 'gcloud'
-      run: |-
-        gcloud projects list
-    # }}Google cloud login
-
-
-
-
-    # - name: Unit test
-    #   run: mvn $MAVEN_PARAM test
+    - name: Unit test
+      run: mvn $MAVEN_PARAM test
           
-    # - name: Acceptance test
-    #   run: mvn $MAVEN_PARAM jbehave:run-stories-as-embeddables@run-stories-as-embeddables
+    - name: Acceptance test
+      run: mvn $MAVEN_PARAM jbehave:run-stories-as-embeddables@run-stories-as-embeddables
 
-    # - name: Integration test
-    #   run: mvn $MAVEN_PARAM verify failsafe:integration-test jacoco:report
+    - name: Integration test
+      run: mvn $MAVEN_PARAM verify failsafe:integration-test jacoco:report
 
-    # - name: Code analysis
-    #   run: |
-    #     mvn $MAVEN_PARAM verify sonar:sonar \
-    #         -Dsonar.host.url=$SONAR_URL \
-    #         -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
-    #         -Dsonar.organization=$SONAR_ORG \
-    #         -Dsonar.projectKey=$SONAR_PROJ \
-    #         -Dsonar.qualitygate.wait=true
+    - name: Code analysis
+      run: |
+        mvn $MAVEN_PARAM verify sonar:sonar \
+            -Dsonar.host.url=$SONAR_URL \
+            -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
+            -Dsonar.organization=$SONAR_ORG \
+            -Dsonar.projectKey=$SONAR_PROJ \
+            -Dsonar.qualitygate.wait=true
 
-    # - name: Dependency scan
-    #   run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=$CVSS_TOLERANCE
+    - name: Dependency scan
+      run: mvn $MAVEN_PARAM dependency-check:check -DfailBuildOnCVSS=$CVSS_TOLERANCE
 
 
 
