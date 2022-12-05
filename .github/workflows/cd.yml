@@ -65,10 +65,10 @@ jobs:
 
     - name: JIB Container
       run: | 
-        mvn -B package com.google.cloud.tools:jib-maven-plugin:3.2.1:build \
-        -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" \
-        -Djib.to.auth.username=_json_key \
-        -Djib.to.auth.password=${{ secrets.GOOGLE_CREDENTIALS }}
+        mvn -B compile com.google.cloud.tools:jib-maven-plugin:3.3.1:build \
+        -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+    # -Djib.to.auth.username=_json_key \
+    # -Djib.to.auth.password=${{ secrets.GOOGLE_CREDENTIALS }}
 
     # - name: Deploy to Cloud Run
     #   id: deploy
