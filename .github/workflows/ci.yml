@@ -10,11 +10,11 @@ name: Continuous Integration
 
 on:
   workflow_dispatch: 
-    branches:
-      - main
-  push:
-    branches:
-      - feat/ci-cd
+  #   branches:
+  #     - main
+  # push:
+  #   branches:
+  #     - feat/ci-cd
 
 env:
   MAVEN_PARAM: --batch-mode

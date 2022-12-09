@@ -53,7 +53,7 @@ jobs:
 
     - name: Build container
       run: | 
-        mvn -B jib:build \
+        mvn -B compile jib:build \
         -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
     #    -Djib.container.creationTime="" 
     # TODO - Add current date
