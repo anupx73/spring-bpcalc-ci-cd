@@ -51,10 +51,13 @@ jobs:
       with:
         credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-    - name: JIB Container
+    - name: Build container
       run: | 
-        mvn -B compile com.google.cloud.tools:jib-maven-plugin:3.3.1:build \
+        mvn -B jib:build \
         -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+    #    -Djib.container.creationTime="" 
+    # TODO - Add current date
+    # TODO - Investigate Cloud Run app failure
 
     - name: Deploy to Cloud Run
       id: deploy
