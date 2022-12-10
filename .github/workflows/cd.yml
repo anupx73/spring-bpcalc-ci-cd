@@ -56,8 +56,6 @@ jobs:
         mvn -B compile jib:build \
         -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
     #    -Djib.container.creationTime="" 
-    # TODO - Add current date
-    # TODO - Investigate Cloud Run app failure
 
     - name: Deploy to Cloud Run
       id: deploy
@@ -66,6 +64,7 @@ jobs:
         service: ${{ env.SERVICE }}
         region: ${{ env.REGION }}
         image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+        flags: '--allow-unauthenticated'
 
     - name: Show output
       run: 'echo "${{ steps.deploy.outputs.url }}"'
