@@ -22,54 +22,54 @@ env:
   REGION: europe-west4
 
 jobs:
-  deploy:
-    permissions:
-      contents: 'read'
-      id-token: 'write'
+  # deploy:
+  #   permissions:
+  #     contents: 'read'
+  #     id-token: 'write'
 
-    runs-on: ubuntu-22.04
+  #   runs-on: ubuntu-22.04
 
-    steps:
-    - name: Set up Java 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+  #   steps:
+  #   - name: Set up Java 17
+  #     uses: actions/setup-java@v3
+  #     with:
+  #       java-version: '17'
+  #       distribution: 'temurin'
 
-    - name: Set up maven cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
+  #   - name: Set up maven cache
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: ~/.m2
+  #       key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+  #       restore-keys: ${{ runner.os }}-m2
 
-    - name: Git code checkout
-      uses: actions/checkout@v3
+  #   - name: Git code checkout
+  #     uses: actions/checkout@v3
 
-    - name: Google Auth
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #   - name: Google Auth
+  #     uses: google-github-actions/auth@v1
+  #     with:
+  #       credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-    - name: Build container
-      run: | 
-        mvn -B compile jib:build \
-        -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+  #   - name: Build container
+  #     run: | 
+  #       mvn -B compile jib:build \
+  #       -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
 
-    - name: Deploy to Cloud Run
-      id: deploy
-      uses: google-github-actions/deploy-cloudrun@v1
-      with:
-        service: ${{ env.SERVICE }}
-        region: ${{ env.REGION }}
-        image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
-        flags: '--allow-unauthenticated'
+  #   - name: Deploy to Cloud Run
+  #     id: deploy
+  #     uses: google-github-actions/deploy-cloudrun@v1
+  #     with:
+  #       service: ${{ env.SERVICE }}
+  #       region: ${{ env.REGION }}
+  #       image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+  #       flags: '--allow-unauthenticated'
 
-    - name: Show output
-      run: echo "${{ steps.deploy.outputs.url }}"
+  #   - name: Show output
+  #     run: echo "${{ steps.deploy.outputs.url }}"
 
   test:
-    needs: deploy
+    # needs: deploy
     timeout-minutes: 60
     runs-on: ubuntu-22.04
     
@@ -96,7 +96,7 @@ jobs:
       run: npm ci; npx playwright install --with-deps
 
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test tests/e2e.spec.ts
 
     - name: Pull K6 docker image
       run: docker pull loadimpact/k6
