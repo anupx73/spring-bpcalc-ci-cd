@@ -18,4 +18,4 @@ A Java SpringBoot MVC application to build a CI/CD pipeline using Github Actions
 - BDD test `mvn jbehave:run-stories-as-embeddables@run-stories-as-embeddables`
 - Sonar analysis `mvn sonar:sonar -Dsonar.login=<key> -Dsonar.host.url=https://sonarcloud.io -Dsonar.qualitygate.wait=true -Dsonar.organization=<key> -Dsonar.projectKey=<key>`
 - Dependency scan: `mvn dependency-check:check -DfailBuildOnCVSS=4`
-
+- End to end test: `npx playwright test`
