@@ -109,14 +109,15 @@ jobs:
       run: docker pull owasp/zap2docker-weekly
     
     - name: Run ZAP penetration test
-      run: docker run -v /report:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t ${{env.APP_URL}} -I -r zapreport.html
+      run: docker run -v reports:/zap/wrk/:rw --user root -t owasp/zap2docker-weekly zap-baseline.py -t ${{env.APP_URL}} -I -r zapreport.html
   
+    - name: Aggregating reports
+      run: |
+        mv ${{github.workspace}}/playwright-report/index.html ${{github.workspace}}/reports/e2e-test-report.html
+        mv ${{github.workspace}}/k6report.txt ${{github.workspace}}/reports/load-test-report.txt
+
     - name: Uploading reports
       uses: actions/upload-artifact@v3
-      if: always()
       with:
         name: test-reports
-        path: |
-          playwright-report/index.html
-          k6report.txt
-          /report/zapreport.html
+        path: ${{github.workspace}}/reports/*
