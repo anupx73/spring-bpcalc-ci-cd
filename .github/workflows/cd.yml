@@ -55,7 +55,8 @@ jobs:
     - name: Build container
       run: | 
         mvn -B compile jib:build \
-        -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+        -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}" \
+        -Djib.to.tags="latest"
 
     - name: Deploy to Cloud Run
       id: deploy

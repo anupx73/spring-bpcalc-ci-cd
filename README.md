@@ -9,14 +9,14 @@ A Java [SpringBoot](https://spring.io/guides/gs/spring-boot/) MVC application to
     - Integration test using [SpringBoot Testing](https://www.baeldung.com/spring-boot-testing) framework
     - Acceptance or behavior driven testing using [JBehave](https://jbehave.org/)
     - Static code analyslus and quality check by [SonarCloud](https://sonarcloud.io/)
-    - [OWASP Dependency Check](https://search.maven.org/artifact/org.owasp/dependency-check-maven/7.4.1/maven-plugin) for vulnerabilities check
+    - OWASP [Dependency Check](https://search.maven.org/artifact/org.owasp/dependency-check-maven/7.4.1/maven-plugin) for vulnerabilities check
 - Continuous Deployment
     - Authentication to Google Cloud project
     - Build application container using [JIB](https://cloud.google.com/java/getting-started/jib)
     - Deploy the container to [Google Cloud Run](https://cloud.google.com/run)
     - Executes [PlayWright](https://playwright.dev/docs/intro) end to end testing
     - Executes [K6](https://k6.io/docs/examples/single-request/) load testing
-    - Executes [OWASP ZAP](https://www.zaproxy.org/docs/desktop/start/pentest/) penetration testing
+    - Executes OWASP [ZAP](https://www.zaproxy.org/docs/desktop/start/pentest/) penetration testing
 - Reporting
     - Both the [CI](https://github.com/hypheni/spring-bpcalc-ci-cd/actions/workflows/ci.yml) and [CD](https://github.com/hypheni/spring-bpcalc-ci-cd/actions/workflows/cd.yml) stage will aggregate all test reports
     - Reports will be published in Github Actions page
