@@ -68,14 +68,14 @@ jobs:
     - name: Integration test
       run: mvn -B verify failsafe:integration-test jacoco:report
 
-    # - name: Code analysis
-    #   run: |
-    #     mvn -B verify sonar:sonar \
-    #         -Dsonar.host.url=$SONAR_URL \
-    #         -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
-    #         -Dsonar.organization=$SONAR_ORG \
-    #         -Dsonar.projectKey=$SONAR_PROJ \
-    #         -Dsonar.qualitygate.wait=true
+    - name: Code analysis
+      run: |
+        mvn -B verify sonar:sonar \
+            -Dsonar.host.url=$SONAR_URL \
+            -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
+            -Dsonar.organization=$SONAR_ORG \
+            -Dsonar.projectKey=$SONAR_PROJ
+# -Dsonar.qualitygate.wait=true
 
     - name: Dependency scan
       uses: dependency-check/Dependency-Check_Action@1.1.0
@@ -92,10 +92,11 @@ jobs:
 
     - name: Aggregating reports
       run: |
-        sudo mv ${{github.workspace}}/target/site/jacoco/index.html ${{github.workspace}}/reports/coverage-report.html
+        sudo mkdir -p ${{github.workspace}}/reports/code-coverage
+        sudo cp -r ${{github.workspace}}/target/site/jacoco ${{github.workspace}}/reports/code-coverage
 
     - name: Upload test results
       uses: actions/upload-artifact@master
       with:
-          name: Depcheck report
+          name: ci-test-reports
           path: ${{github.workspace}}/reports/*
