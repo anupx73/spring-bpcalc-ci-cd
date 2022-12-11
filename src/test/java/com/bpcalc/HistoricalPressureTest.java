@@ -3,7 +3,7 @@ package com.bpcalc;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-public class HistoricalPressureTest {
+class HistoricalPressureTest {
     @Test
     void testGet_1() {
         var testCat = new HistoricalPressure("11-12-2021", "Ideal", "100", "60");

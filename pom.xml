@@ -146,7 +146,7 @@
 				<version>7.3.2</version>
 				<configuration>
 					<suppressionFiles>
-					  <!-- <suppressionFile>src/main/resources/owasp-dependency-check/suppressions.xml</suppressionFile> -->
+					  <suppressionFile>src/main/resources/owasp-dependency-check/suppressions.xml</suppressionFile>
 					</suppressionFiles>
 					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
 				</configuration>

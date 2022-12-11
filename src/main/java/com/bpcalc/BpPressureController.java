@@ -24,7 +24,7 @@ public class BpPressureController {
     @GetMapping("/")
 	public String showIndex(Model model) {
 		model.addAttribute("bpPressure", new BpPressure());
-		return "index";
+		return INDEX_PAGE;
 	}
 
 	@PostMapping("/")

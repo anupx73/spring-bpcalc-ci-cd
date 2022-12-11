@@ -74,26 +74,17 @@ jobs:
             -Dsonar.host.url=$SONAR_URL \
             -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
             -Dsonar.organization=$SONAR_ORG \
-            -Dsonar.projectKey=$SONAR_PROJ
-# -Dsonar.qualitygate.wait=true
+            -Dsonar.projectKey=$SONAR_PROJ \
+            -Dsonar.qualitygate.wait=true
 
     - name: Dependency scan
-      uses: dependency-check/Dependency-Check_Action@1.1.0
-      id: Depcheck
-      env:
-        JAVA_HOME: /opt/jdk
-      with:
-        project: 'test'
-        path: '.'
-        format: 'HTML'
-        args: >
-          --failOnCVSS 5
-          --enableRetired
+      run: mvn -B dependency-check:check -DfailBuildOnCVSS=4
 
     - name: Aggregating reports
       run: |
         sudo mkdir -p ${{github.workspace}}/reports/code-coverage
-        sudo cp -r ${{github.workspace}}/target/site/jacoco ${{github.workspace}}/reports/code-coverage
+        sudo cp -r ${{github.workspace}}/target/site/jacoco/ ${{github.workspace}}/reports/code-coverage
+        sudo mv ${{github.workspace}}/target/dependency-check-report.html ${{github.workspace}}/reports/dependency-check-report.html
 
     - name: Upload test results
       uses: actions/upload-artifact@master
