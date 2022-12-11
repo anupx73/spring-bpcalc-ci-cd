@@ -80,6 +80,8 @@ jobs:
     - name: Dependency scan
       uses: dependency-check/Dependency-Check_Action@1.1.0
       id: Depcheck
+      env:
+        JAVA_HOME: /opt/jdk
       with:
         project: 'test'
         path: '.'

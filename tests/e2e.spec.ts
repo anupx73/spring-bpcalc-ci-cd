@@ -41,5 +41,5 @@ test('Verify history page', async ({ page }) => {
 
   // Verify the calculated pressure category
   const result = page.locator(".input-group.alert.alert-info");
-  await expect(result).toContainText("Pre-High Blood Pressure");
+  await expect(result).toContainText("Blood Pressure");
 });
