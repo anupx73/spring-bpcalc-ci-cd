@@ -1,0 +1,21 @@
+{
+  "name": "spring-bpcalc-ci-cd",
+  "version": "1.0.0",
+  "description": "[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hypheni_spring-bpcalc&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hypheni_spring-bpcalc)",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hypheni/spring-bpcalc-ci-cd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hypheni/spring-bpcalc-ci-cd/issues"
+  },
+  "homepage": "https://github.com/hypheni/spring-bpcalc-ci-cd#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.28.1"
+  }
+}

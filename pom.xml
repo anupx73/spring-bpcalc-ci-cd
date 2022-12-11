@@ -146,7 +146,7 @@
 				<version>7.3.2</version>
 				<configuration>
 					<suppressionFiles>
-					  <suppressionFile>owasp-dependency-check-suppressions.xml</suppressionFile>
+					  <suppressionFile>src/main/resources/owasp-dependency-check/suppressions.xml</suppressionFile>
 					</suppressionFiles>
 					<assemblyAnalyzerEnabled>false</assemblyAnalyzerEnabled>
 				</configuration>
@@ -158,6 +158,16 @@
 						</goals>
 					</execution>
 				</executions>
+			  </plugin>
+			  <plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.3.1</version>
+				<configuration>
+					<container>
+						<creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+					</container>
+				</configuration>
 			  </plugin>
 		</plugins>
 	</build>

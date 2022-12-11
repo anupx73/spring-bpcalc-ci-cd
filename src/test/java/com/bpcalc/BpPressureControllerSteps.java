@@ -13,7 +13,7 @@ public class BpPressureControllerSteps {
 
     private Integer systolic = 0;
     private Integer diastolic = 0;
-    private BPCategory bpCategory = BPCategory.Invalid;
+    private BPCategory bpCategory = BPCategory.INVALID;
 
 	private String output = "";
 

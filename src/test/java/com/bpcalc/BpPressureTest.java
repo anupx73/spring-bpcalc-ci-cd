@@ -3,7 +3,7 @@ package com.bpcalc;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
-public class BpPressureTest {
+class BpPressureTest {
     @Test
     void testGet_1() {
         var testPressure = new BpPressure(120, 70);

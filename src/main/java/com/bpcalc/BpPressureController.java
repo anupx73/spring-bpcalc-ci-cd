@@ -17,19 +17,21 @@ import org.springframework.validation.BindingResult;
 @Controller
 public class BpPressureController {
 	
-	public List<HistoricalPressure> historyList = new LinkedList<HistoricalPressure>();
+	private static final String INDEX_PAGE = "index";
+	private static final String HISTORY_PAGE = "history";
+	public List<HistoricalPressure> historyList = new LinkedList<>();
 
     @GetMapping("/")
 	public String showIndex(Model model) {
 		model.addAttribute("bpPressure", new BpPressure());
-		return "index";
+		return INDEX_PAGE;
 	}
 
 	@PostMapping("/")
 	public String updateIndex(@Valid @ModelAttribute BpPressure bpPressure, BindingResult bindingResult, Model model) {
 		// Validation error
 		if (bindingResult.hasErrors()) {
-            return "index";
+            return INDEX_PAGE;
         }
 
 		// Calculating the category
@@ -37,7 +39,7 @@ public class BpPressureController {
 		String categoryValue = categoryId.getDisplayValue();
 
 		// Storing to list for History table
-		if (categoryId != BPCategory.Invalid) {
+		if (categoryId != BPCategory.INVALID) {
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
 			HistoricalPressure pressurreData = new HistoricalPressure(formatter.format(new Date()), categoryValue, 
 												bpPressure.getSystolic().toString(), 
@@ -49,23 +51,23 @@ public class BpPressureController {
 		bpPressure.setCategory(categoryValue);
 		model.addAttribute("bpPressure", bpPressure);
 
-		return "index";
+		return INDEX_PAGE;
 	}
 
 	@GetMapping("/history")
 	public String showHistory(Model model) {
 		model.addAttribute("historyList", historyList);
 		model.addAttribute("avgPressure", calcAveragePressure());
-		return "history";
+		return HISTORY_PAGE;
 	}
 	
-	public static enum BPCategory
+	public enum BPCategory
     {
-		Invalid("Invalid Pressure! Systolic should be higher than Diastolic"),
-        Low("Low Blood Pressure"),
-        Ideal("Ideal Blood Pressure"),
-        PreHigh("Pre-High Blood Pressure"),
-        High("High Blood Pressure");
+		INVALID("Invalid Pressure! Systolic should be higher than Diastolic"),
+        LOW("Low Blood Pressure"),
+        IDEAL("Ideal Blood Pressure"),
+        PREHIGH("Pre-High Blood Pressure"),
+        HIGH("High Blood Pressure");
 
 		private final String displayValue;
 
@@ -80,20 +82,20 @@ public class BpPressureController {
 
 	public BPCategory calcCategory(BpPressure bpPressure)
 	{
-		BPCategory resultCategory = BPCategory.Invalid;
+		BPCategory resultCategory = BPCategory.INVALID;
 		
 		if (bpPressure.getSystolic() < bpPressure.getDiastolic()) {
 			return resultCategory;
 		}
 
 		if (bpPressure.getSystolic() < 90 && bpPressure.getDiastolic() < 60)
-			resultCategory = BPCategory.Low;
+			resultCategory = BPCategory.LOW;
 		else if (bpPressure.getSystolic() < 120 && bpPressure.getDiastolic() < 80)
-			resultCategory = BPCategory.Ideal;
+			resultCategory = BPCategory.IDEAL;
 		else if (bpPressure.getSystolic() < 140 && bpPressure.getDiastolic() < 90)
-			resultCategory = BPCategory.PreHigh;
+			resultCategory = BPCategory.PREHIGH;
 		else if (bpPressure.getSystolic() <= 190 && bpPressure.getDiastolic() <= 100)
-			resultCategory = BPCategory.High;
+			resultCategory = BPCategory.HIGH;
 		else
 			throw new java.lang.UnsupportedOperationException("BP calc logic failure!!!");
 
@@ -113,11 +115,7 @@ public class BpPressureController {
 			avgSys = avgSys / historyList.size();
 			avgDias = avgDias / historyList.size();
 			BPCategory avgCategory = calcCategory(new BpPressure(avgSys, avgDias));
-			// avgPressureValue = "Systolic (" + avgSys.toString() + "), " + 
-			// 					"Diastolic (" + avgDias.toString() + "), " + 
-			// 					"Category (" + avgCategory.getDisplayValue() + ")";
 			avgPressureValue = avgSys.toString() + "/" + avgDias.toString() + ", " + avgCategory.getDisplayValue();
-
 		}
 
 		return avgPressureValue;

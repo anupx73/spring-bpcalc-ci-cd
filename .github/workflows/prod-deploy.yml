@@ -1,0 +1,46 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Deploy to Prod
+
+on:
+  workflow_dispatch: 
+    branches:
+      - main
+  push:
+    branches:
+      - feat/ci-cd
+
+env:
+  PROJECT_ID: hypheni-gcp-370616
+  SERVICE: spring-bpcalc
+  REGION: europe-west4
+  TRAFFIC_PERCENTILE: 20
+  APP_URL: https://spring-bpcalc-lxwpse7yja-ez.a.run.app
+
+jobs:
+  deploy:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
+    runs-on: ubuntu-22.04
+
+    steps:
+    - name: Google Auth
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+    - name: Set up GCloud SDK
+      uses: google-github-actions/setup-gcloud@v1
+
+    - name: Use GCloud CLI
+      run: |
+        gcloud run deploy ${{ env.SERVICE }} --image gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:latest --no-traffic --tag green --region=${{ env.REGION }}
+        gcloud run services update-traffic ${{ env.SERVICE }} --to-tags green=${{ env.TRAFFIC_PERCENTILE }} --region=${{ env.REGION }}

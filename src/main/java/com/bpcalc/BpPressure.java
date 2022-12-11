@@ -16,21 +16,21 @@ public class BpPressure {
 		this.diastolic = diastolic;
 	}
 
-	public final short SystolicMin = 70;
-	public final short SystolicMax = 190;
-	public final short DiastolicMin = 40;
-	public final short DiastolicMax = 100;
+	public static final short SYSTOLIC_MIN = 70;
+	public static final short SYSTOLIC_MAX = 190;
+	public static final short DIASTOLIC_MIN = 40;
+	public static final short DIASTOLIC_MAX = 100;
 
 	@NotNull
-	@Min(SystolicMin)
-	@Max(SystolicMax)
+	@Min(SYSTOLIC_MIN)
+	@Max(SYSTOLIC_MAX)
 	@Getter
 	@Setter
 	private Integer systolic;
 
 	@NotNull
-	@Min(DiastolicMin)
-	@Max(DiastolicMax)
+	@Min(DIASTOLIC_MIN)
+	@Max(DIASTOLIC_MAX)
 	@Getter
 	@Setter
 	private Integer diastolic;

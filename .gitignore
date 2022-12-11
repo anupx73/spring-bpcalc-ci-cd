@@ -34,3 +34,7 @@ build/
 
 ### macOS
 .DS_Store
+node_modules/
+/test-results/
+/playwright-report/
+/playwright/.cache/
