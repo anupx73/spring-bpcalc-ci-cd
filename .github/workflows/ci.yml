@@ -74,11 +74,11 @@ jobs:
             -Dsonar.host.url=$SONAR_URL \
             -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
             -Dsonar.organization=$SONAR_ORG \
-            -Dsonar.projectKey=$SONAR_PROJ \
-            -Dsonar.qualitygate.wait=true
+            -Dsonar.projectKey=$SONAR_PROJ
+# -Dsonar.qualitygate.wait=true
 
     - name: Dependency scan
-      uses: dependency-check/Dependency-Check_Action@main
+      uses: dependency-check/Dependency-Check_Action@1.1.0
       id: Depcheck
       with:
         project: 'test'

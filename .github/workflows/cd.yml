@@ -23,54 +23,54 @@ env:
   APP_URL: https://spring-bpcalc-lxwpse7yja-ez.a.run.app
 
 jobs:
-  deploy:
-    permissions:
-      contents: 'read'
-      id-token: 'write'
+  # deploy:
+  #   permissions:
+  #     contents: 'read'
+  #     id-token: 'write'
 
-    runs-on: ubuntu-22.04
+  #   runs-on: ubuntu-22.04
 
-    steps:
-    - name: Set up Java 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+  #   steps:
+  #   - name: Set up Java 17
+  #     uses: actions/setup-java@v3
+  #     with:
+  #       java-version: '17'
+  #       distribution: 'temurin'
 
-    - name: Set up maven cache
-      uses: actions/cache@v2
-      with:
-        path: ~/.m2
-        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: ${{ runner.os }}-m2
+  #   - name: Set up maven cache
+  #     uses: actions/cache@v2
+  #     with:
+  #       path: ~/.m2
+  #       key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+  #       restore-keys: ${{ runner.os }}-m2
 
-    - name: Git code checkout
-      uses: actions/checkout@v3
+  #   - name: Git code checkout
+  #     uses: actions/checkout@v3
 
-    - name: Google Auth
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+  #   - name: Google Auth
+  #     uses: google-github-actions/auth@v1
+  #     with:
+  #       credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-    - name: Build container
-      run: | 
-        mvn -B compile jib:build \
-        -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
+  #   - name: Build container
+  #     run: | 
+  #       mvn -B compile jib:build \
+  #       -Djib.to.image="gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}"
 
-    - name: Deploy to Cloud Run
-      id: deploy
-      uses: google-github-actions/deploy-cloudrun@v1
-      with:
-        service: ${{ env.SERVICE }}
-        region: ${{ env.REGION }}
-        image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
-        flags: '--allow-unauthenticated'
+  #   - name: Deploy to Cloud Run
+  #     id: deploy
+  #     uses: google-github-actions/deploy-cloudrun@v1
+  #     with:
+  #       service: ${{ env.SERVICE }}
+  #       region: ${{ env.REGION }}
+  #       image: gcr.io/${{ env.PROJECT_ID }}/${{ env.SERVICE }}:${{ github.sha }}
+  #       flags: '--allow-unauthenticated'
 
-    - name: Show output
-      run: echo "${{ steps.deploy.outputs.url }}"
+  #   - name: Show output
+  #     run: echo "${{ steps.deploy.outputs.url }}"
 
   test:
-    needs: deploy
+    # needs: deploy
     timeout-minutes: 60
     runs-on: ubuntu-22.04
     
@@ -113,6 +113,7 @@ jobs:
   
     - name: Aggregating reports
       run: |
+        mkdir -p ${{github.workspace}}/reports
         mv ${{github.workspace}}/playwright-report/index.html ${{github.workspace}}/reports/e2e-test-report.html
         mv ${{github.workspace}}/k6report.txt ${{github.workspace}}/reports/load-test-report.txt
 
