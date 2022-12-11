@@ -116,7 +116,7 @@ jobs:
         mkdir -p ${{github.workspace}}/reports
         mv ${{github.workspace}}/playwright-report/index.html ${{github.workspace}}/reports/e2e-test-report.html
         mv ${{github.workspace}}/k6report.txt ${{github.workspace}}/reports/load-test-report.txt
-        mv /tmp/zapreport.html ${{github.workspace}}/reports/pen-test-report.html
+        sudo mv /tmp/zapreport.html ${{github.workspace}}/reports/pen-test-report.html
 
     - name: Uploading reports
       uses: actions/upload-artifact@v3
