@@ -1,7 +1,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hypheni_spring-bpcalc-ci-cd&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=hypheni_spring-bpcalc-ci-cd)
 
-# BP Calculator - CI/CD Demo
-A Java [SpringBoot](https://spring.io/guides/gs/spring-boot/) MVC application to build a CI/CD pipeline using [Github Actions](https://github.com/hypheni/spring-bpcalc-ci-cd/actions). This includes:
+# BP Calculator - Development/Deployment Demo
+A Java [SpringBoot](https://spring.io/guides/gs/spring-boot/) MVC web application and its deployment to GCP using [Github Actions](https://github.com/hypheni/spring-bpcalc-ci-cd/actions). This includes:
 
 - [Web app](https://spring-bpcalc-lxwpse7yja-ez.a.run.app/) with an index and history page using [Thymeleaf](https://www.thymeleaf.org/documentation.html) template engine
 - Continuous Integration
@@ -21,8 +21,9 @@ A Java [SpringBoot](https://spring.io/guides/gs/spring-boot/) MVC application to
     - Both the [CI](https://github.com/hypheni/spring-bpcalc-ci-cd/actions/workflows/ci.yml) and [CD](https://github.com/hypheni/spring-bpcalc-ci-cd/actions/workflows/cd.yml) stage will aggregate all test reports
     - Reports will be published in Github Actions page
 
-## Build commands
+## Useful commands
 - Compile `mvn clean compile`
+- Run springboot app `mvn spring-boot:run`
 - Unit test `mvn surefire:test`
 - Integration test `mvn verify failsafe:integration-test`
 - Generate code coverage report `mvn jacoco:report`
